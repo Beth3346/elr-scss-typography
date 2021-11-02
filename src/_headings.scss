@@ -1,0 +1,153 @@
+// scss-lint:disable DuplicateProperty
+// Headings
+
+// makes a rounded heading
+
+@mixin elr-heading-rounded($config: ()) {
+    $config: extend((
+        bk-color: $text-color,
+        text-color: $white,
+        border-radius: 3px
+    ), $config);
+
+    $bk-color: map-get($config, bk-color);
+    $text-color: map-get($config, text-color);
+    $border-radius: map-get($config, border-radius);
+
+    padding: to-rems(10px);
+    background-color: $bk-color;
+    color: $text-color;
+
+    @if $border-radius > 0 {
+        border-radius: $border-radius;
+    }
+}
+
+// makes a pill heading
+
+@mixin elr-heading-pill($config: ()) {
+    $config: extend((
+        bk-color: $text-color,
+        text-color: $white
+    ), $config);
+
+    $bk-color: map-get($config, bk-color);
+    $text-color: map-get($config, text-color);
+
+    padding: 10px 20px;
+    background-color: $bk-color;
+    color: $text-color;
+    border-radius: 50px;
+}
+
+@mixin elr-heading-underline($config: ()) {
+    $config: extend((
+        bdr-color: $light-grey
+    ), $config);
+
+    $bdr-color: map-get($config, bdr-color);
+
+    border-bottom: 1px solid $bdr-color;
+    padding-bottom: 5px;
+}
+
+@mixin elr-heading-shortline($config: ()) {
+    $config: extend((
+        bdr-color: $accent-color,
+        align: center,
+        width: 80px,
+        font-size: 24px
+    ), $config);
+
+    $bdr-color: map-get($config, bdr-color);
+    $align: map-get($config, align);
+    $width: map-get($config, width);
+    $font-size: map-get($config, font-size);
+
+    @include elr-underline(
+        $config: (
+            color: $bdr-color,
+            width: $width,
+            align: $align,
+            spacing: $font-size
+        )
+    );
+    text-align: $align;
+}
+
+@mixin elr-heading-divider($config: ()) {
+    $config: extend((
+        line-width: 80px,
+        line-color: $accent-color,
+        max-width: 550px
+    ), $config);
+
+    $line-width: map-get($config, line-width);
+    $line-color: map-get($config, line-color);
+    $max-width: map-get($config, max-width);
+
+    text-align: center;
+    position: relative;
+    width: auto;
+    max-width: $max-width;
+    max-width: max-content;
+    padding-left: to-rems($line-width + 20);
+    padding-right: to-rems($line-width + 20);
+
+    &::before,
+    &::after {
+        content: '';
+        width: $line-width;
+        height: 1px;
+        background-color: $line-color;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        display: block;
+    }
+
+    &::after {
+        left: auto;
+        right: 0;
+    }
+}
+
+@mixin elr-heading-icon($config: ()) {
+    $config: extend((
+        icon: '',
+        icon-color: $accent-color,
+        font-size: 24px
+    ), $config);
+
+    $icon: map-get($config, icon);
+    $icon-color: map-get($config, icon-color);
+    $font-size: map-get($config, font-size);
+
+    font-size: to-rems($font-size);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    line-height: 1.2;
+
+    &::before {
+        @include elr-font-awesome($config: (font-size: 120%));
+        content: $icon;
+        color: $icon-color;
+        margin-right: $font-size * .6;
+        display: block;
+    }
+
+    .icon-group-heading,
+    .icon-group-subheading {
+        padding: 0;
+        margin: 0;
+    }
+
+    .icon-group-heading {
+        font-size: to-rems($font-size);
+    }
+
+    .icon-group-subheading {
+        font-size: to-rems(50%);
+    }
+}
